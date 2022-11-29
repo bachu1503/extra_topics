@@ -1,0 +1,67 @@
+---
+title: "shiny_dashboard_template"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(viridis)
+library(p8105.datasets)
+library(plotly)
+```
+
+The code below loads and cleans the data, and selects only a few of the variables. 
+
+```{r import_data}
+data("nyc_airbnb")
+nyc_airbnb = 
+  nyc_airbnb %>% 
+  mutate(rating = review_scores_location / 2) %>%
+  rename(latitude = lat, longitude = long) %>%
+  select(
+    boro = neighbourhood_group, neighbourhood, rating, price, room_type,
+    latitude, longitude) %>%
+  filter(!is.na(rating))
+```
+
+Column {.sidebar}
+-----------------------------------------------------------------------
+
+```{r}
+boroughs = nyc_airbnb %>% distinct(boro) %>% pull()
+
+selectInput(
+  inputId = "borough_choice",
+  label = "Borough Choice",
+  choices = boroughs
+)
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+
+```
+
+### Chart C
+
+```{r}
+
+```
+
